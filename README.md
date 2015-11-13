@@ -4,7 +4,11 @@ CLI that ensures that there is only a single version of a dependency installed.
 
 ## Why?
 
-I want to use nconf for my config, but I also want to write tons of small modules that share that configuration. If I'm not super careful about specifying semver compatible versions, and running `npm dedupe`, I could easily load two versions of nconf that don't share the configuration.
+### Configuration
+I want to use [nconf](https://www.npmjs.com/package/nconf) for my config, but I also want to write tons of small modules that share that configuration. If I'm not super careful about specifying semver compatible versions, and running `npm dedupe`, I could easily load two versions of nconf that don't share the configuration.
+
+### Optimizing frontend assets
+If I'm using webpack, I probably want to try to only bundle in one version of React to minimize the payload. [Webpack does this for you automatically], but if you have different versions it will bundle in both copies. Use `nodupdeps` to alert you to possible optimizations.
 
 ## How?
 
