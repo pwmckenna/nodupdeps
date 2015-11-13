@@ -1,0 +1,40 @@
+#!/usr/bin/env node
+
+var path = require('path');
+var rpt = require ('read-package-tree');
+var findRoot = require('find-root');
+var root = findRoot(process.cwd());
+
+var pkgNames = process.argv.slice(2);
+
+var findPackageLocations = function (pkgName, data) {
+  return data.children.reduce(function (arr, childData) {
+    return arr.concat(findPackageLocations(pkgName, childData));
+  }, (data.package.name === pkgName) ? [path.relative(root, data.path)] : []);
+}
+
+rpt(root, function (er, data) {
+  var dupPackageLocations = pkgNames.reduce(function (aggregator, pkgName) {
+    var locations = findPackageLocations(pkgName, data);
+    if (locations.length > 1) {
+      aggregator[pkgName] = locations;
+    }
+    return aggregator;
+  }, {});
+
+  if (Object.keys(dupPackageLocations).length) {
+    console.warn('Error: Duplicates found.\n');
+    for (var d in dupPackageLocations) {
+      if (dupPackageLocations.hasOwnProperty(d)) {
+        console.warn(d);
+        dupPackageLocations[d].forEach(function (location) {
+          console.warn('  ', location);
+        });
+        console.warn();
+      }
+    }
+    process.exit(1);
+  } else {
+    process.exit(0);
+  }
+});
