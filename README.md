@@ -29,7 +29,7 @@ I'd add a post install hook!
 {
   ...
   "scripts": {
-    "postinstall": "nodupdeps"
+    "postinstall": "nodupdeps nconf"
   },
   "devDependencies": {
     "nodupdeps": "*"
