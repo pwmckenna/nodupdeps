@@ -10,7 +10,7 @@ var pkgNames = process.argv.slice(2);
 var findPackageLocations = function (pkgName, data) {
   return data.children.reduce(function (arr, childData) {
     return arr.concat(findPackageLocations(pkgName, childData));
-  }, (data.package.name === pkgName) ? [path.relative(root, data.path)] : []);
+  }, (data.package.name === pkgName) ? [path.relative(root, data.path) + '@' + data.package.version] : []);
 }
 
 rpt(root, function (er, data) {
