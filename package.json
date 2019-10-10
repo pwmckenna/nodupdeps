@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/pwmckenna/nodupdeps#readme",
   "dependencies": {
-    "find-root": "^0.1.1",
-    "read-package-tree": "^5.1.2"
+    "find-root": "^1.1.0",
+    "read-package-tree": "^5.3.1"
   }
 }
